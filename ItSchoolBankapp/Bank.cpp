@@ -14,7 +14,7 @@ TIP_CONT Bank::selectareMoneda()
 {
 	std::cout << "Alegeti moneda contului din lista de mai jos: \n";
 	std::cout << "1->EURO \n";
-	std::cout << "3->RON \n";
+	std::cout << "2->RON \n";
 	std::cout << "Selectie: \n";
 	int optiune; std::cin >> optiune;
 
