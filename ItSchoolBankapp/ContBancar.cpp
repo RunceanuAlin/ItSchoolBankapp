@@ -19,3 +19,8 @@ std::string ContBancar::GetPrenume()
 {
 	return prenume;
 }
+
+std::string ContBancar::GetIban()
+{
+	return IBAN;
+}

@@ -10,15 +10,15 @@ Bank::~Bank()
 	m_ConturiBancare.clear();
 }
 
-TIP_CONT Bank::eSelectCurrency()
+TIP_CONT Bank::selectareMoneda()
 {
 	std::cout << "Alegeti moneda contului din lista de mai jos: \n";
 	std::cout << "1->EURO \n";
 	std::cout << "3->RON \n";
 	std::cout << "Selectie: \n";
-	int iChosenCurrency; std::cin >> iChosenCurrency;
+	int optiune; std::cin >> optiune;
 
-	switch (iChosenCurrency)
+	switch (optiune)
 	{
 	case '1':
 		return TIP_CONT::CONT_EURO;
@@ -32,42 +32,43 @@ TIP_CONT Bank::eSelectCurrency()
 std::string Bank::createIban()
 {
 
-	std::string sIban[6]{ "RO", "ITBK" };
+	std::string Iban[6]{ "RO", "ITBK" };
 
-	TIP_CONT eUserCurrency{ eSelectCurrency() };
+	TIP_CONT tipContUtilizator{ selectareMoneda() };
 
 	for (int i = 5; i > 2; i--)
 	{
-		(i == 5) ? srand(time(NULL)) : srand(std::stoi(sIban[i + 1]));
+		(i == 5) ? srand(time(NULL)) : srand(std::stoi(Iban[i + 1]));
 
-		sIban[i] = std::to_string(rand() % 9999 + 1000);
+		Iban[i] = std::to_string(rand() % 9999 + 1000);
 	}
 
-	switch (eUserCurrency)
+	switch (tipContUtilizator)
 	{
 	case TIP_CONT::INDISPONIBIL:
 		return "IBAN invalid.\n";
 	case TIP_CONT::CONT_EURO:
-		sIban[2] = "EEUR";
+		Iban[2] = "EUR";
 		break;
 	case TIP_CONT::CONT_RON:
 	{
-		srand(std::stoi(sIban[3]));
-		sIban[2] = std::to_string(rand() % 8999 + 1000);
+		srand(std::stoi(Iban[3]));
+		Iban[2] = std::to_string(rand() % 8999 + 1000);
 	}
 	break;
 	default:
 		break;
 	}
 
-	srand(time(NULL) + std::stoi(sIban[4])); std::string sValidationCode = std::to_string(rand() % 89 + 10);
-	sIban[0] += sValidationCode;
+	srand(time(NULL) + std::stoi(Iban[4])); 
+	std::string sValidationCode = std::to_string(rand() % 89 + 10);
+	Iban[0] += sValidationCode;
 
-	std::string sGeneratedIban;
-	for (auto sequence : sIban)
-		sGeneratedIban += sequence;
+	std::string IbanGenerat;
+	for (auto sequence : Iban)
+		IbanGenerat += sequence;
 
-	return sGeneratedIban;
+	return IbanGenerat;
 }
 
 
@@ -117,7 +118,7 @@ void Bank::vizualizareConturi()
 
 			std::cout << "Contul " << i + 1 << " : " << m_ConturiBancare[i]->GetNume() << std::endl;
 			std::cout << m_ConturiBancare[i]->GetPrenume() << std::endl;
-			//std::cout << m_ConturiBancare[i]->GetIban() << std::endl;
+			std::cout << m_ConturiBancare[i]->GetIban() << std::endl;
 			//std::cout << m_ConturiBancare[i]->GetSold() << std::endl;
 		}
 		char optiune;

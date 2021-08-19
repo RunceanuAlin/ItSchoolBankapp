@@ -19,5 +19,6 @@ public:
 	ContBancar(std::string nume, std::string prenume, std::string iban);
 	std::string GetNume();
 	std::string GetPrenume();
+	std::string GetIban();
 	~ContBancar();
 };

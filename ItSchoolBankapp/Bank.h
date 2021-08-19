@@ -10,7 +10,7 @@ public:
 
 	Bank();
 	~Bank();
-	TIP_CONT eSelectCurrency();
+	TIP_CONT selectareMoneda();
 	void adaugareCont();
 	void vizualizareConturi();
 	void modificareConturi();
