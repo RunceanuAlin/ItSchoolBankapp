@@ -3,6 +3,16 @@
 
 Bank::Bank()
 {
+	DataStorage* data = new DataStorage();
+	data->citireDate();
+	if (data->dimensiuneData() > 0)
+	{
+		for (int i = 0; i < data->dimensiuneData(); i++)
+		{
+			m_ConturiBancare.push_back(data->getConturi(i));
+		}
+	}
+	delete data;
 }
 
 Bank::~Bank()
@@ -32,44 +42,28 @@ TIP_CONT Bank::selectareMoneda()
 std::string Bank::createIban()
 {
 
-	std::string Iban[6]{ "RO", "ITBK" };
-
-	TIP_CONT tipContUtilizator{ selectareMoneda() };
-
-	for (int i = 5; i > 2; i--)
+	
+	std::string iban = "RO";
+	for (int i = 0; i < 2; i++)
 	{
-		(i == 5) ? srand(time(NULL)) : srand(std::stoi(Iban[i + 1]));
-
-		Iban[i] = std::to_string(rand() % 9999 + 1000);
+		int temp = 0;
+		srand(time(0) + i);
+		temp = rand() % 9 + i;
+		iban += std::to_string(temp);
 	}
-
-	switch (tipContUtilizator)
-	{
-	case TIP_CONT::INDISPONIBIL:
-		return "IBAN invalid.\n";
-	case TIP_CONT::CONT_EURO:
-		Iban[2] = "EUR";
-		break;
-	case TIP_CONT::CONT_RON:
-	{
-		srand(std::stoi(Iban[3]));
-		Iban[2] = std::to_string(rand() % 8999 + 1000);
+	iban += "ITSCHOOL";
+	for (int k = 0; k < 5; k++) {
+		for (int i = 0; i < 5; i++)
+		{
+			int temp = 0;
+			srand(time(0) + i + k);
+			temp = rand() % 9;
+			iban += std::to_string(temp);
+		}
 	}
-	break;
-	default:
-		break;
-	}
-
-	srand(time(NULL) + std::stoi(Iban[4])); 
-	std::string sValidationCode = std::to_string(rand() % 89 + 10);
-	Iban[0] += sValidationCode;
-
-	std::string IbanGenerat;
-	for (auto sequence : Iban)
-		IbanGenerat += sequence;
-
-	return IbanGenerat;
+	return iban;
 }
+
 
 
 
@@ -85,6 +79,9 @@ void Bank::adaugareCont()
 	std::string iban = createIban();
 	ContBancar* cont = new ContBancar(nume, prenume, iban);
 	m_ConturiBancare.push_back(cont);
+	DataStorage* data = new DataStorage(cont);
+	data->scriereDate();
+	delete data;
 	std::cout << "1 -> pentru crearea unui cont \n";
 	std::cout << "2 -> pentru meniul principal \n";
 	char optiune;
@@ -106,39 +103,21 @@ void Bank::adaugareCont()
 void Bank::vizualizareConturi()
 {
 	system("CLS");
-	std::string nume;
-	std::cin >> nume;
-	std::string prenume;
-	std::cin >> prenume;
 	std::cout << "Numarul de conturi in banca este: " << m_ConturiBancare.size() << std::endl;
-	if (!m_ConturiBancare.empty())
+	for (int i = 0; i < m_ConturiBancare.size(); i++)
 	{
-		for (int i = 0; i < m_ConturiBancare.size(); i++)
-		{
+		std::cout << "Contul " << i + 1 << " " << m_ConturiBancare[i]->GetNume()
+			<< ' ' << m_ConturiBancare[i]->GetIban() << std::endl;
 
-			std::cout << "Contul " << i + 1 << " : " << m_ConturiBancare[i]->GetNume() << std::endl;
-			std::cout << m_ConturiBancare[i]->GetPrenume() << std::endl;
-			std::cout << m_ConturiBancare[i]->GetIban() << std::endl;
-			//std::cout << m_ConturiBancare[i]->GetSold() << std::endl;
-		}
-		char optiune;
-		std::cin >> optiune;
-		switch (optiune)
-		{
-		case'1':
-			std::cout << "Going back \n";
-			break;
-		default:
-			break;
-
-		}
 	}
-	else
+	std::cout << "1 -> Revenire la meniul principal\n";
+	char optiune;
+	std::cin >> optiune;
+	switch (optiune)
 	{
-		std::cout << "Niciun cont inregistrat \n";
-
-
-
+	default:
+		system("CLS");
+		break;
 	}
 }
 
