@@ -11,32 +11,7 @@ int main()
     //instantam o banca
     Bank* itSchoolBank = new Bank();
     bool isRunning = true;
-    std::ofstream dateCont("BazeDeDate.csv");
-
-    dateCont << "Conturi existente. \n";
-    dateCont << "Nume Prenume \n";
-    dateCont << "Iban \n";
-    
-
-    dateCont.close();
-
-    std::ifstream citireDate("BazeDeData.csv");
-    if (!citireDate.is_open())
-    {
-        std::cout << "Fisierul nu poate fi deschis \n";
-    }
-
-    if (citireDate.good())
-    {
-        std::string line;
-        while (std::getline(citireDate, line))
-        {
-            std::cout << line << std::endl;
-        }
-
-
-    }
-
+   
     do
     {
         system("CLS");

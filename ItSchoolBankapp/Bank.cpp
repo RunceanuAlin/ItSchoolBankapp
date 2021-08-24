@@ -106,7 +106,8 @@ void Bank::vizualizareConturi()
 	std::cout << "Numarul de conturi in banca este: " << m_ConturiBancare.size() << std::endl;
 	for (int i = 0; i < m_ConturiBancare.size(); i++)
 	{
-		std::cout << "Contul " << i + 1 << " " << m_ConturiBancare[i]->GetNume()
+		std::cout << "Cont " << i + 1 << " " << m_ConturiBancare[i]->GetNume()
+			<< ' ' << m_ConturiBancare[i]->GetPrenume()
 			<< ' ' << m_ConturiBancare[i]->GetIban() << std::endl;
 
 	}
